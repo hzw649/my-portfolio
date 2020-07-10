@@ -33,3 +33,23 @@ function getHello() {
     document.getElementById('greeting-container').innerText = text;
   });
 }
+
+function getComment() {
+    fetch('/data').then(response => response.json()).then((stats) => {
+
+    const statsListElement = document.getElementById('comment-container');
+    statsListElement.innerHTML = '';
+    statsListElement.appendChild(
+        createListElement('x : ' + stats.x));
+    statsListElement.appendChild(
+        createListElement('y : ' + stats.y));
+    statsListElement.appendChild(
+        createListElement('z : ' + stats.z));
+  });
+}
+
+function createListElement(text) {
+  const liElement = document.createElement('li');
+  liElement.innerText = text;
+  return liElement;
+}
