@@ -15,37 +15,27 @@
 /**
  * Adds a random greeting to the page.
  */
-function addRandomGreeting() {
-  const greetings =
-      ['Hello world!', '¡Hola Mundo!', '你好，世界！', 'Bonjour le monde!'];
-
-  // Pick a random greeting.
-  const greeting = greetings[Math.floor(Math.random() * greetings.length)];
-  console.log("botton!");
-  console.warn("botton!");
-  // Add it to the page.
-  const greetingContainer = document.getElementById('greeting-container');
-  greetingContainer.innerText = greeting;
-}
 
 function getHello() {
   fetch('/data').then(response => response.text()).then((text) => {
     document.getElementById('greeting-container').innerText = text;
   });
+  console.log("hello");
 }
 
-function getComment() {
+function LoadData() {
     fetch('/data').then(response => response.json()).then((stats) => {
 
     const statsListElement = document.getElementById('comment-container');
+
     statsListElement.innerHTML = '';
-    statsListElement.appendChild(
-        createListElement('x : ' + stats.x));
-    statsListElement.appendChild(
-        createListElement('y : ' + stats.y));
-    statsListElement.appendChild(
-        createListElement('z : ' + stats.z));
+    stats.forEach(
+(com) => {
+        statsListElement.appendChild(
+            createListElement(com));
+    })
   });
+    console.log("load data");
 }
 
 function createListElement(text) {
@@ -53,3 +43,5 @@ function createListElement(text) {
   liElement.innerText = text;
   return liElement;
 }
+
+

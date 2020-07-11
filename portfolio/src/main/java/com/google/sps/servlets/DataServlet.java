@@ -15,32 +15,33 @@
 package com.google.sps.servlets;
 
 import com.google.gson.Gson;
+import java.util.ArrayList;
 import java.io.IOException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-/** Servlet that returns some example content. TODO: modify this file to handle comments data */
 @WebServlet("/data")
 public class DataServlet extends HttpServlet {
 
-  @Override
-  public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
+    @Override
+    public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        String json = new Gson().toJson(comments);
+        response.setContentType("application/json;");
+        response.getWriter().println(json);
+    //    System.out.println("GET:"+json);
+    }
 
-    Stat serverStats = new Stat(5, 13);
-    Gson gson = new Gson();
-    String json = gson.toJson(serverStats);
-    response.setContentType("application/json;");
-    response.getWriter().println(json);
-  }
-}
+    ArrayList<String> comments = new ArrayList<>();
 
-final class Stat {
-    private final long x;
-    private final long y;
-    public  Stat(long _x, long _y) {
-        x = _x;
-        y = _y;
+    @Override
+    public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        String comment = request.getParameter("comment");
+
+        comments.add(comment);
+    //    System.out.println("POST:"+comments.size());
+        // Redirect back to the HTML page.
+        response.sendRedirect("/index.html");
     }
 }

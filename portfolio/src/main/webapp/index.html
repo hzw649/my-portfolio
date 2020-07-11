@@ -1,24 +1,30 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <meta charset="UTF-8">
-    <title>My Portfolio</title>
-    <link rel="stylesheet" href="style.css">
-    <script src="script.js"></script>
-  </head>
-  <body>
-    <div id="content">
-      <h1>My Portfolio</h1>
-      <p>This is my portfolio.</p>
-      <p>i am huzhenwei, an undergraduate student from pku.I'm interested in CS.Now I am an intern working in ByteDance.</p>
-      <p><a href="https://github.com/hzw649">github link</a></p>
-      <a href="https://www.linkedin.com/in/%E9%95%87%E7%82%9C-%E8%83%A1-3260641a2/">linkedin link</a>
-      <img src="images/conan.jpg">
-      <p>Click here to get a random message:</p>
-      <button onclick="getHello()">Hello</button>
-      <div id="greeting-container"></div>
-      <button onclick="getComment()">Hello</button>
-      <div id="comment-container"></div>
-    </div>
-  </body>
+    <head>
+        <meta charset="UTF-8">
+        <title>My Portfolio</title>
+        <link rel="stylesheet" href="style.css">
+        <script src="script.js"></script>
+    </head>
+    <body onload = 'LoadData()'>
+        <div id="content">
+            <h1>My Portfolio</h1>
+            <p>This is my portfolio.</p>
+            <p>i am huzhenwei, an undergraduate student from pku.I'm interested in CS.Now I am an intern working in ByteDance.</p>
+            <p><a href="https://github.com/hzw649">github link</a></p>
+            <a href="https://www.linkedin.com/in/%E9%95%87%E7%82%9C-%E8%83%A1-3260641a2/">linkedin link</a>
+            <img src="images/conan.jpg">
+
+
+            <ul id="comment-container"></ul>
+            <form action="/data" method="POST">
+
+                <p>write any comment...</p>
+                <input type="string" name="comment" value="any comment">
+                <br/><br/>
+
+                <input type="submit" />
+            </form>
+        </div>
+    </body>
 </html>
