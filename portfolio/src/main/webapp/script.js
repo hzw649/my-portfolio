@@ -16,32 +16,43 @@
  * Adds a random greeting to the page.
  */
 
-function getHello() {
-  fetch('/data').then(response => response.text()).then((text) => {
-    document.getElementById('greeting-container').innerText = text;
-  });
-  console.log("hello");
-}
-
 function LoadData() {
     fetch('/data').then(response => response.json()).then((stats) => {
 
     const statsListElement = document.getElementById('comment-container');
 
     statsListElement.innerHTML = '';
-    stats.forEach(
-(com) => {
+    stats.forEach((comment) => {
         statsListElement.appendChild(
-            createListElement(com));
+            createCommentElement(comment));
     })
   });
-    console.log("load data");
 }
 
-function createListElement(text) {
-  const liElement = document.createElement('li');
-  liElement.innerText = text;
-  return liElement;
+function createCommentElement(comment) {
+  const commentElement = document.createElement('li');
+  commentElement.className = 'task';
+
+  const titleElement = document.createElement('span');
+  titleElement.innerText = comment.title;
+
+  const deleteButtonElement = document.createElement('button');
+  deleteButtonElement.innerText = 'Delete';
+  deleteButtonElement.addEventListener('click', () => {
+    deleteTask(comment);
+
+    // Remove the task from the DOM.
+    commentElement.remove();
+  });
+
+  commentElement.appendChild(titleElement);
+  commentElement.appendChild(deleteButtonElement);
+  return commentElement;
 }
 
-
+/** Tells the server to delete the task. */
+function deleteTask(task) {
+  const params = new URLSearchParams();
+  params.append('id', task.id);
+  fetch('/delete', {method: 'POST', body: params});
+}
