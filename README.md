@@ -11,4 +11,4 @@ To get started:
 
 Then follow the on-screen instructions to set up your repo.
 
-This repo contains [your name]'s portfolio and SPS projects.
+This repo contains huzhenwei's portfolio and SPS projects.
