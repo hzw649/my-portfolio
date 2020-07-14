@@ -12,13 +12,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-/**
- * Adds a random greeting to the page.
- */
-
 function LoadData() {
     fetch('/data').then(response => response.json()).then((stats) => {
-
         const statsListElement = document.getElementById('comment-container');
 
         statsListElement.innerHTML = '';
