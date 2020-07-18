@@ -19,17 +19,25 @@ function LoadData() {
         console.log(stat);
         if (stat.state)
         {
-            commentElement.style.display='';
+            commentElement.classList.remove('hidden');
             loginElement.href = stat.url;
             loginElement.innerHTML = "logout link";
         }
         else
         {
-            commentElement.style.display='none';
             loginElement.href = stat.url;
             loginElement.innerHTML = "login link";
         }
     });
+
+    fetch('/blobstore-upload-url')
+        .then(rsp => rsp.text())
+        .then((imageUploadUrl) => {
+            const messageForm = document.getElementById('image-upload');
+            messageForm.action = imageUploadUrl;
+            messageForm.classList.remove('hidden');
+        });
+
     fetch('/data').then(response => response.json()).then((stats) => {
         const statsListElement = document.getElementById('comment-container');
 

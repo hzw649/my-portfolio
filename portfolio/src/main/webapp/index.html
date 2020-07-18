@@ -5,6 +5,12 @@
         <title>My Portfolio</title>
         <link rel="stylesheet" href="style.css">
         <script src="script.js"></script>
+        <style>
+/* Form is hidden by default. */
+.hidden {
+    display: none;
+}
+        </style>
     </head>
     <body onload = 'LoadData()'>
         <div id="content">
@@ -13,12 +19,21 @@
             <p>i am huzhenwei, an undergraduate student from pku.I'm interested in CS.Now I am an intern working in ByteDance.</p>
             <p><a href="https://github.com/hzw649">github link</a></p>
             <a href="https://www.linkedin.com/in/%E9%95%87%E7%82%9C-%E8%83%A1-3260641a2/">linkedin link</a>
-            <img src="images/conan.jpg">
+            <!img src="images/conan.jpg">
 
+            <form id="image-upload" class="hidden" method="POST" enctype="multipart/form-data">
+                <p>Type some text:</p>
+                <textarea name="message"></textarea>
+                <br/>
+                <p>Upload an image:</p>
+                <input type="file" name="image">
+                <br/><br/>
+                <button>Submit</button>
+            </form>
 
             <ul id="comment-container"></ul>
             <a id="login-link" href="1231">login link</a>
-            <form id="comment-list" action="/data" method="POST">
+            <form id="comment-list" class="hidden" action="/data" method="POST">
 
                 <p>write any comment...</p>
                 <input type="string" name="comment" value="any comment">
