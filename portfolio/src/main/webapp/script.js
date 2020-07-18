@@ -13,6 +13,23 @@
 // limitations under the License.
 
 function LoadData() {
+    fetch('/login-state').then(rsp => rsp.json()).then((stat) => {
+        const commentElement = document.getElementById('comment-list');
+        const loginElement = document.getElementById('login-link');
+        console.log(stat);
+        if (stat.state)
+        {
+            commentElement.style.display='';
+            loginElement.href = stat.url;
+            loginElement.innerHTML = "logout link";
+        }
+        else
+        {
+            commentElement.style.display='none';
+            loginElement.href = stat.url;
+            loginElement.innerHTML = "login link";
+        }
+    });
     fetch('/data').then(response => response.json()).then((stats) => {
         const statsListElement = document.getElementById('comment-container');
 
@@ -29,7 +46,7 @@ function createCommentElement(comment) {
     commentElement.className = 'task';
 
     const titleElement = document.createElement('span');
-    titleElement.innerText = comment.title;
+    titleElement.innerText = comment.title + "   " + comment.email;
 
     const deleteButtonElement = document.createElement('button');
     deleteButtonElement.innerText = 'Delete';
