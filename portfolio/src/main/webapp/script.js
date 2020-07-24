@@ -16,7 +16,6 @@ function LoadData() {
     fetch('/login-state').then(rsp => rsp.json()).then((stat) => {
         const commentElement = document.getElementById('comment-list');
         const loginElement = document.getElementById('login-link');
-        console.log(stat);
         if (stat.state)
         {
             commentElement.classList.remove('hidden');

@@ -37,15 +37,10 @@ public class FormHandlerServlet extends HttpServlet {
 
   @Override
   public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
-
-    // Get the message entered by the user.
     String message = request.getParameter("message");
 
-    // Get the URL of the image that the user uploaded to Blobstore.
     String imageUrl = getUploadedFileUrl(request, "image");
 
-    // Output some HTML that shows the data the user entered.
-    // A real codebase would probably store these in Datastore.
     PrintWriter out = response.getWriter();
     out.println("<p>Here's the image you uploaded:</p>");
     out.println("<a href=\"" + imageUrl + "\">");

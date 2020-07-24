@@ -16,6 +16,8 @@ package com.google.sps.servlets;
 
 import com.google.gson.Gson;
 import java.util.ArrayList;
+import java.util.Map;
+import java.util.HashMap;
 import java.io.IOException;
 import java.io.PrintWriter;
 import javax.servlet.annotation.WebServlet;
@@ -37,6 +39,7 @@ public class LoginStateServlet extends HttpServlet {
         PrintWriter out = response.getWriter();
         UserService userService = UserServiceFactory.getUserService();
 
+        // 0 for not login, 1 for login
         int state = 0;
         String url = "";
         // If user is not logged in, show a login form (could also redirect to a login page)
@@ -46,9 +49,16 @@ public class LoginStateServlet extends HttpServlet {
             url = userService.createLogoutURL("/");
         }
         else
+        {
+            state = 0;
             url = userService.createLoginURL("/");
-        String json = "{ \"state\":"+state;
-        json += ", \"url\":\""+url+"\"}";
+        }
+
+        Map<String, Object> map = new HashMap<>();
+        map.put("state", state);
+        map.put("url", url);
+        String json = new Gson().toJson(map);
+
         response.setContentType("application/json;");
         out.println(json);
     }
