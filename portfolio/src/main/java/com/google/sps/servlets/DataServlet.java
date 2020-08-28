@@ -22,12 +22,10 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.google.appengine.api.datastore.DatastoreService;
-import com.google.appengine.api.datastore.DatastoreServiceFactory;
-import com.google.appengine.api.datastore.Entity;
-import com.google.appengine.api.datastore.PreparedQuery;
-import com.google.appengine.api.datastore.Query;
+import com.google.appengine.api.datastore.*;
 import com.google.appengine.api.datastore.Query.SortDirection;
+
+import com.google.appengine.api.users.UserServiceFactory;
 
 @WebServlet("/data")
 public class DataServlet extends HttpServlet {
@@ -43,9 +41,10 @@ public class DataServlet extends HttpServlet {
         for (Entity entity : results.asIterable()) {
             long id = entity.getKey().getId();
             String title = (String) entity.getProperty("title");
+            String email = (String) entity.getProperty("email");
             long timestamp = (long) entity.getProperty("timestamp");
 
-            Comment comment  = new Comment(id, title, timestamp);
+            Comment comment  = new Comment(id, title, timestamp, email);
             comments.add(comment);
         }
 
@@ -58,10 +57,12 @@ public class DataServlet extends HttpServlet {
     public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
         String title = request.getParameter("comment");
         long timestamp = System.currentTimeMillis();
+        String email = UserServiceFactory.getUserService().getCurrentUser().getEmail();
 
         Entity taskEntity = new Entity("Comments");
         taskEntity.setProperty("title", title);
         taskEntity.setProperty("timestamp", timestamp);
+        taskEntity.setProperty("email", email);
 
         DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
         datastore.put(taskEntity);
@@ -73,10 +74,11 @@ public class DataServlet extends HttpServlet {
 
 final class Comment {
     long id, timestamp;
-    String title;
-    Comment(long _id, String _title, long _ts){
+    String title, email;
+    Comment(long _id, String _title, long _ts, String _email){
         id = _id;
         title = _title;
         timestamp = _ts;
+        email = _email;
     }
 }
